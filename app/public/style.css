@@ -1,0 +1,115 @@
+body {
+    margin: 0;
+    font-family: 'Yeseva One', cursive;
+    color: black;
+    font-size: 20px;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+
+/* Container
+===================== */
+
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+header {
+    font-size: 25px;
+    margin: 20px 0;
+    padding: 5px 5px;
+    border: 1px black dashed;
+    text-align: center;
+}
+
+
+/* Basic
+=======================*/
+
+.basic {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 50px;
+    background-color: rgb(150, 226, 63);
+    background-size: cover;
+}
+
+.basic__inner {
+    width: 100%;
+    max-width: 970px;
+    background-color: rgb(187, 209, 61);
+    border: black 2px solid;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.btn {
+    background-color: coral;
+    font-size: 18px;
+    font-weight: 700;
+    font-style: italic;
+    padding: 10px 20px;
+    margin: 20px 0;
+}
+
+.btn:hover {
+    background-color: rgb(255, 251, 13);
+}
+
+.btn__file {
+    background-color: rgb(208, 255, 80);
+    font-size: 16px;
+    font-weight: 700;
+    font-style: italic;
+    padding: 10px 30px;
+    margin: 20px 0;
+}
+
+.btn-file:hover {
+    background-color: rgba(208, 255, 80, 0.192);
+    border: 1px black solid;
+}
+
+.textarea-result {
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+    margin-top: 30px;
+    height: 300px;
+    font-size: 16px;
+}
+
+.img-picture {
+    padding: 20px 20px;
+    max-width: 900px;
+    border: 2px solid black;
+    border-radius: 1%;
+    margin-top: 10px;
+}
+
+.output__info {
+    text-align: left;
+}
+
+pre {
+    text-align: left;
+}
