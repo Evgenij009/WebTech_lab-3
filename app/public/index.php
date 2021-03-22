@@ -1,8 +1,8 @@
 <?php
 include("../fileException.php");
+include("../fileInfo.php");
+
 define("PICTURE_EXTENSIONS", array('jpg', 'files', 'gif', 'bmp', 'jpeg', 'png'));
-
-
 
 function get_parameter($name)
 {
@@ -12,7 +12,7 @@ function get_parameter($name)
     return null;
 }
 
-$file_path = get_parameter("file-path");
+$file_path = get_parameter("dir");
 ?>
 
 <!DOCTYPE html>
@@ -38,8 +38,8 @@ $file_path = get_parameter("file-path");
             <div class="basic__inner">
 
                 <form action="index.php" method="post" enctype="multipart/form-data">
-                    <input class="btn__file" type="file" name="files[]" id="files" multiple="" directory="" webkitdirectory="" required>
-                    <p><input class="btn" type="submit" value="Upload" /></p>
+                    <input type="text" name="dir" id="" required>
+                    <p><input class="btn" type="submit" value="look" /></p>
                 </form>
 
             </div>
@@ -48,47 +48,44 @@ $file_path = get_parameter("file-path");
         <!-- ./container -->
     </div>
 
+
+
     <?php
-    $allFiles = count($_FILES['files']['tmp_name']);
-    echo "AAAAAAAAAAAAAAAAA: $allFiles";
-    echo "<pre>";
-    print_r($_FILES);
-    echo "</pre>";
+    $directory = $file_path;
 
-    $arrayFiles = array();
-    $count = 0;
+    function getDirContents($dir, &$results = array())
+    {
+        $files = scandir($dir);
 
-    try {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST')
-            foreach ($_FILES['files']['name'] as $i => $name) {
-                if (
-                    strlen($_FILES['files']['name'][$i]) > 1
-                ) {
-
-                    echo $_FILES['files']['error'][$i];
-                    if (move_uploaded_file($_FILES['files']['tmp_name'][$i], '../files/' . $name)) {
-                        $count++;
-                        $arrayFiles[] = '../files/' . $name;
-                    }
-                } else {
-                    throw new UploadException($_FILES['files']['error'][$i]);
-                }
+        foreach ($files as $key => $value) {
+            $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+            if (!is_dir($path)) {
+                $results[] = $path;
+            } else if ($value != "." && $value != "..") {
+                getDirContents($path, $results);
+                $results[] = $path;
             }
-    } catch (Exception $e) {
-        error_log($e->getMessage(), 3, '../error_log');
+        }
+
+        return $results;
     }
 
-    echo "Count: $count";
 
-    echo "<pre>";
-    print_r($arrayFiles);
-    echo "</pre>";
+    function outputPropertiiesFiles($dir)
+    {
+        $count = 0;
+        foreach ($dir as $key => $path) {
 
+            $count++;
+            echo "$count) Path: $path<br>";
+            infoFile($path);
+            echo "----------------------------------------------------------------------<br>";
+        }
+    }
 
-    // Use
-
+    $arrayPaths =  getDirContents($directory);
+    outputPropertiiesFiles($arrayPaths);
     ?>
-
 
 </body>
 
