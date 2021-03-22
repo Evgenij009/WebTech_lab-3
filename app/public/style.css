@@ -2,7 +2,7 @@ body {
     margin: 0;
     font-family: 'Yeseva One', cursive;
     color: black;
-    font-size: 17px;
+    font-size: 16px;
 }
 
 *,
@@ -110,10 +110,80 @@ header {
     text-align: left;
 }
 
-pre {
-    text-align: left;
+.error {
+    margin-top: 20px;
+    font-size: 30px;
+    color: red;
+    text-align: center;
 }
 
 
-/* ====================== 
+/* Table
 =========================*/
+
+.tableFiles {
+    word-wrap: break-word;
+    word-break: break-all;
+    /* более приоритетно */
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid purple;
+}
+
+thead th:nth-child(1) {
+    width: 7%;
+}
+
+thead th:nth-child(2) {
+    width: 30%;
+}
+
+thead th:nth-child(3) {
+    width: 7%;
+}
+
+thead th:nth-child(4) {
+    width: 10%;
+}
+
+thead th:nth-child(5) {
+    width: 10%;
+}
+
+thead th:nth-child(6) {
+    width: 10%;
+}
+
+thead th:nth-child(7) {
+    width: 10%;
+}
+
+thead th:nth-child(8) {
+    width: 15%;
+}
+
+th,
+td {
+    padding: 5px;
+}
+
+html {
+    font-family: 'helvetica neue', helvetica, arial, sans-serif;
+}
+
+thead th,
+tfoot th {
+    font-family: 'Rock Salt', cursive;
+}
+
+tbody td {
+    text-align: center;
+}
+
+tfoot th {
+    text-align: right;
+}
