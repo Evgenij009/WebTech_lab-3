@@ -1,5 +1,4 @@
 <?php
-include("../fileException.php");
 include("../fileInfo.php");
 
 define("PICTURE_EXTENSIONS", array('jpg', 'files', 'gif', 'bmp', 'jpeg', 'png'));

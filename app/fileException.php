@@ -11,6 +11,9 @@ class UploadException extends Exception
     private function codeToMessage($code)
     {
         switch ($code) {
+            case 2:
+                $message = "ERROR: processing some files (no access or not found)! ";
+                break;
             case UPLOAD_ERR_INI_SIZE:
                 $message = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
                 break;
@@ -32,7 +35,6 @@ class UploadException extends Exception
             case UPLOAD_ERR_EXTENSION:
                 $message = "File upload stopped by extension";
                 break;
-
             default:
                 $message = "Unknown upload error";
                 break;

@@ -111,8 +111,8 @@ header {
 }
 
 .error {
-    margin-top: 20px;
-    font-size: 30px;
+    margin-top: 10px;
+    font-size: 20px;
     color: red;
     text-align: center;
 }

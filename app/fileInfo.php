@@ -1,18 +1,61 @@
 <?php
 include("../fileIcon.php");
 
+use FFI\Exception;
+
+
+set_error_handler("warning_handler", E_WARNING);
+
+function warning_handler($errno, $errstr)
+{
+    $message = "";
+    switch ($errno) {
+        case 2:
+            $message = "ERROR: processing some files (no access or not found)! ";
+            break;
+        case UPLOAD_ERR_INI_SIZE:
+            $message = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
+            break;
+        case UPLOAD_ERR_FORM_SIZE:
+            $message = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form";
+            break;
+        case UPLOAD_ERR_PARTIAL:
+            $message = "The uploaded file was only partially uploaded";
+            break;
+        case UPLOAD_ERR_NO_FILE:
+            $message = "No file was uploaded";
+            break;
+        case UPLOAD_ERR_NO_TMP_DIR:
+            $message = "Missing a temporary folder";
+            break;
+        case UPLOAD_ERR_CANT_WRITE:
+            $message = "Failed to write file to disk";
+            break;
+        case UPLOAD_ERR_EXTENSION:
+            $message = "File upload stopped by extension";
+            break;
+        default:
+            $message = "ERROR: processing some files";
+            break;
+    }
+    echo "<div class='error'<h3> $message </h3></div>";
+}
+
 function getDirContents($dir, &$results = array())
 {
-    $files = scandir($dir);
-
-    foreach ($files as $key => $value) {
-        $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
-        if (!is_dir($path)) {
-            $results[] = $path;
-        } else if ($value != "." && $value != "..") {
-            getDirContents($path, $results);
-            $results[] = $path;
+    try {
+        $files = scandir($dir);
+        foreach ($files as $key => $value) {
+            $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+            if (!is_dir($path)) {
+                $results[] = $path;
+            } else if ($value != "." && $value != "..") {
+                getDirContents($path, $results);
+                $results[] = $path;
+            }
         }
+    } catch (Exception $e) {
+        echo "<div class='error'<h1> ERROR: $e->getCode()!</h1></div>";
     }
 
     return $results;
@@ -24,7 +67,6 @@ function outputPropertiiesFiles($dir, $directory)
     $count = 0;
     echo "    <div class=\"tableFiles\">
         <table>
-        <caption>A summary of the UK's most famous punk bands</caption>
             <thead>
                 <tr>
                     <th scope=\"col\">Count</th>
@@ -38,9 +80,11 @@ function outputPropertiiesFiles($dir, $directory)
                 </tr>
             </thead>";
     echo "<tbody>";
-    $pos =  strrpos($directory, "\\") + 1;
-    // echo "$directory<br>";
-    // echo "POS: $pos";
+    if ($directory[2] === '\\')
+        $pos =  strrpos($directory, "\\") + 1;
+    else
+        $pos =  strrpos($directory, "/") + 1;
+
     foreach ($dir as $key => $path) {
         $count++;
         echo "<tr>";
